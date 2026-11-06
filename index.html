@@ -139,8 +139,7 @@
     background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 14px 14px;
     text-align:center;box-shadow:var(--shadow);cursor:pointer;color:inherit;font:inherit;
   }
-  .fav .ico{font-size:26px;line-height:1}
-  .fav .n{font-family:"Bodoni Moda",Georgia,serif;font-style:italic;font-size:17px;margin-top:8px;line-height:1.2}
+    .fav .n{font-family:"Bodoni Moda",Georgia,serif;font-style:italic;font-size:19px;margin-top:0;line-height:1.2}
   .fav .p{font-size:13px;color:var(--price);font-weight:700;margin-top:4px}
 
   /* ---------- Seções ---------- */
@@ -199,8 +198,8 @@
     <div class="ornament" aria-hidden="true">♥</div>
     <p class="tagline">Comida que abraça. Um cantinho charmoso para você esquecer a loucura de São Paulo.</p>
     <div class="badges">
-      <span class="badge">☕ Café da manhã o dia todo</span>
-      <span class="badge">🍰 Doces americanos da casa</span>
+      <span class="badge">Café da manhã o dia todo</span>
+      <span class="badge">Doces americanos da casa</span>
     </div>
   </div>
 </header>
@@ -222,10 +221,10 @@
   <div class="favs" id="favs">
     <div class="eyebrow">Os queridinhos da casa</div>
     <div class="fav-row">
-      <button class="fav" data-go="camembert-empanado"><div class="ico">🧀</div><div class="n">Camembert Empanado</div><div class="p">R$ 59</div></button>
-      <button class="fav" data-go="red-velvet"><div class="ico">🍰</div><div class="n">Red Velvet</div><div class="p">R$ 24</div></button>
-      <button class="fav" data-go="torre-de-nutella"><div class="ico">🥞</div><div class="n">Torre de Nutella</div><div class="p">R$ 36</div></button>
-      <button class="fav" data-go="pink-drink"><div class="ico">🍹</div><div class="n">Pink Drink</div><div class="p">R$ 28</div></button>
+      <button class="fav" data-go="camembert-empanado"><div class="n">Camembert Empanado</div><div class="p">R$ 59</div></button>
+      <button class="fav" data-go="red-velvet"><div class="n">Red Velvet</div><div class="p">R$ 24</div></button>
+      <button class="fav" data-go="torre-de-nutella"><div class="n">Torre de Nutella</div><div class="p">R$ 36</div></button>
+      <button class="fav" data-go="pink-drink"><div class="n">Pink Drink</div><div class="p">R$ 28</div></button>
     </div>
   </div>
 
@@ -252,7 +251,7 @@
 
 <script>
 const MENU = [
-  { id:"aperitivos", nome:"Os Aperitivos", icon:"🧀", itens:[
+  { id:"aperitivos", nome:"Os Aperitivos", itens:[
     { n:"Camembert Empanado", p:59, d:"Ele mesmo!! O nosso queijo camembert empanado, servido com mel e pimenta-do-reino, há 10 anos sendo sucesso de vendas por aqui. Servido com pão tostado.", t:["★ Sucesso há 10 anos"] },
     { n:"Burrata", p:69, d:"Burrata com tomates frescos, pesto de manjericão, redução de balsâmico e tapenade de azeitona. Acompanha fatias de pão de fermentação natural." },
     { n:"Bruschetta Caprese", p:34, d:"Mussarela de búfala fresca, tomate confit, tapenade de azeitona e pesto de manjericão, montada sobre pão de fermentação natural." },
@@ -261,12 +260,12 @@ const MENU = [
     { n:"Avocado Toast", p:29, d:"Avocado temperado, ovos mexidos, cebola roxa e tomate picadinhos, farofa de bacon e pimenta biquinho. Montado sobre pão de fermentação natural." },
     { n:"Dadinho de Tapioca", p:29, d:"Clássicos dadinhos de tapioca com melaço de cana." },
   ]},
-  { id:"saladas", nome:"As Saladas", icon:"🥗", itens:[
+  { id:"saladas", nome:"As Saladas", itens:[
     { n:"Caesar Salad", p:44, d:"Folhas, molho caesar tradicional, bacon, parmesão e croutons." },
     { n:"Salada Juliana", p:44, d:"Alface, cenoura, palmito, tomate-cereja, batata palha feita na casa, lascas de parmesão e molho de salada da casa (mostarda)." },
     { n:"Molho Salada da Casa", p:28, d:"O molho da nossa salada da casa! Feito aqui!! Pra você levar para a SUA CASA ♥", t:["300 ml","Para levar"] },
   ]},
-  { id:"pratos", nome:"Os Pratos", icon:"🍽️", obs:"Os pratos não acompanham salada", itens:[
+  { id:"pratos", nome:"Os Pratos", obs:"Os pratos não acompanham salada", itens:[
     { n:"Parmegiana de Mignon", p:68, d:"Com arroz e chips de batata artesanal — mais crocante para o delivery (ou fritas caseiras: não chega como no bistrô, mas tem quem ama)." },
     { n:"Filé Espanhol", p:87, d:"Mignon com molho de vinho, risoto de parmesão, alho confitado e tuile de parmesão." },
     { n:"Angus em Crosta", p:87, d:"Alcatra de angus em crosta de ervas e castanha de caju, com risoto de cebola caramelizada, picles de cebola roxa e cebola pérola grelhada." },
@@ -275,12 +274,12 @@ const MENU = [
     { n:"Peixe Crocante Empanado no Coco", p:62, d:"Com purê de batata e vinagrete de feijão-fradinho." },
     { n:"Chicken Alfredo Pasta", p:52, d:"Um clássico americano com frango grelhado, gremolata e penne ao molho de queijo." },
   ]},
-  { id:"carinhoso", nome:"O Carinhoso", icon:"🤍", obs:"Comidinha de casa, do jeitinho que abraça", itens:[
+  { id:"carinhoso", nome:"O Carinhoso", obs:"Comidinha de casa, do jeitinho que abraça", itens:[
     { n:"Picadinho", p:55, d:"Com arroz, feijão, farofa, ovo estalado e tartar de banana-da-terra.", t:["Terça a sexta"] },
     { n:"Estrogonofe de Mignon", p:55, d:"Estrogonofe de mignon com arroz e batata palha feita na casa." },
     { n:"Prato Kids", p:null, d:"Arroz, feijão, grelhado à escolha e chips de batata artesanal ou fritas caseiras.", v:[["Frango",44],["Mignon",52]] },
   ]},
-  { id:"brunch", nome:"As Tortas & o Brunch", icon:"🥞", obs:"Café da manhã servido o dia todo", itens:[
+  { id:"brunch", nome:"As Tortas & o Brunch", obs:"Café da manhã servido o dia todo", itens:[
     { n:"Torta de Frango", p:34, d:"Torta de frango com crocante de ervas. Acrescente salada por mais R$ 6." },
     { n:"Torta de Palmito", p:34, d:"Torta de palmito com crosta de parmesão. Acrescente salada por mais R$ 6." },
     { n:"Avocado Toast", p:29, d:"Avocado temperado, ovos mexidos, cebola roxa e tomate picadinhos, farofa de bacon e pimenta biquinho, sobre pão de fermentação natural." },
@@ -296,12 +295,12 @@ const MENU = [
     { n:"Pão na Chapa", p:9 },
     { n:"Pão de Queijo Frito", p:24, d:"Com recheio supercremoso de requeijão." },
   ]},
-  { id:"sanduiches", nome:"Os Sanduíches", icon:"🥪", itens:[
+  { id:"sanduiches", nome:"Os Sanduíches", itens:[
     { n:"Tostado de Miga", p:29, d:"Lanche típico argentino de pão miga, leve e fininho, com recheio de presunto e queijo." },
     { n:"Croque Monsieur", p:32, d:"Pão de miga com presunto e queijo, molho bechamel e queijo gratinado." },
     { n:"Burger da Condi", p:44, d:"2 smash burgers de 60 g, cebola dourada, muito queijo e molho especial no pão brioche. ♥ Acompanha batata frita." },
   ]},
-  { id:"doces", nome:"Doces Condimento", icon:"🍰", obs:"Confeitaria americana feita na casa", itens:[
+  { id:"doces", nome:"Doces Condimento", obs:"Confeitaria americana feita na casa", itens:[
     { n:"Red Velvet", p:24, d:"Bolo americano com textura de veludo, cor vermelha e cobertura à base de cream cheese.", t:["★ Clássico da casa"] },
     { n:"Banoffee", p:22, d:"Torta com base de bolacha, recheio de doce de leite cozido, banana e chantilly, polvilhada com cacau." },
     { n:"NY Style Cheesecake", p:29, d:"Escolha sua calda:", o:["Frutas vermelhas","Doce de leite","Goiabada","Brigadeiro"] },
@@ -311,7 +310,7 @@ const MENU = [
     { n:"Crème Brûlée de Doce de Leite", p:24, d:"Que delícia que é!! Parece um pudim mais cremoso: um creme denso e delicado ao mesmo tempo, de doce de leite, com casquinha de açúcar caramelizado." },
     { n:"Devil's Cake", p:24, d:"Nosso queridão bolo chocolatudo, servido com calda de chocolate quente." },
   ]},
-  { id:"drinks", nome:"Drinks", icon:"🍹", itens:[
+  { id:"drinks", nome:"Drinks", itens:[
     { n:"Pink Drink", p:28, d:"Nossa Pink Lemonade com um toque de vodka ♥" },
     { n:"Clericot Rosé", p:29, d:"Vinho frisante rosé com mix de frutas da época, marinadas em licor de laranja e infusão de hibisco." },
     { n:"Jardim Rosa", p:36, d:"Gin Tanqueray e água tônica. Acompanha frutas, especiarias e ervas para você fazer seu mix e criar um drink do \"seu jeitinho\"." },
@@ -320,7 +319,7 @@ const MENU = [
     { n:"Rose Dream", p:21, d:"Xarope de capim-santo, suco de limão, água com gás e algodão-doce cor-de-rosa.", t:["Sem álcool"] },
     { n:"Pink Lemonade", p:18, d:"Nossa limonada rosa, feita na casa!", t:["Sem álcool"] },
   ]},
-  { id:"cafes", nome:"Cafés & Chocolate", icon:"☕", itens:[
+  { id:"cafes", nome:"Cafés & Chocolate", itens:[
     { n:"Dalgona Coffee \"café fofinho\"", p:16, d:"O famoso café do TikTok: creme de café, leite gelado, gelo e calda de chocolate." },
     { n:"Espresso", p:7 },
     { n:"Espresso Duplo", p:11 },
@@ -330,7 +329,7 @@ const MENU = [
     { n:"Chocolate Quente Belga", p:17 },
     { n:"Chocolate Gelado Alpino", p:15 },
   ]},
-  { id:"chas", nome:"Carta de Chás", icon:"🫖", obs:"Chás Tal Chá · R$ 16 cada", itens:[
+  { id:"chas", nome:"Carta de Chás", obs:"Chás Tal Chá · R$ 16 cada", itens:[
     { n:"Chá Verde Touareg", p:16, t:["Chá verde"] },
     { n:"Chá Verde Cherry Rose", p:16, t:["Chá verde"] },
     { n:"Chá do Amor", p:16, t:["Chá preto"] },
@@ -338,7 +337,7 @@ const MENU = [
     { n:"Vermelho Intenso", p:16, t:["Infusão"] },
     { n:"Doce Amêndoa", p:16, t:["Infusão"] },
   ]},
-  { id:"bebidas", nome:"Bebidas", icon:"🥤", itens:[
+  { id:"bebidas", nome:"Bebidas", itens:[
     { n:"Água Mineral", p:7, t:["300 ml"] },
     { n:"Suco de Laranja Natural", p:16 },
     { n:"Suco Integral", p:16, o:["Frutas vermelhas","Uva","Manga"] },
@@ -393,7 +392,7 @@ function render(q=""){
   observe();
 }
 
-chipsEl.innerHTML = MENU.map(c=>`<a class="chip" href="#${c.id}" data-id="${c.id}">${c.icon} ${esc(c.nome.replace(/^(Os|As|O) /,""))}</a>`).join("");
+chipsEl.innerHTML = MENU.map(c=>`<a class="chip" href="#${c.id}" data-id="${c.id}">${esc(c.nome.replace(/^(Os|As|O) /,""))}</a>`).join("");
 
 let io;
 function setActive(id){
