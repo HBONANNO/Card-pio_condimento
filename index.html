@@ -184,6 +184,83 @@
     text-decoration:none;font-weight:700;font-size:14px;padding:12px 20px;border-radius:999px;
   }
   .fine{font-size:12px;color:var(--ink-soft);margin-top:22px;max-width:480px;margin-inline:auto}
+
+  /* ---------- Pedido pela mesa ---------- */
+  .add{
+    margin-top:4px;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--accent);background:transparent;
+    color:var(--accent);font:600 22px/1 "Mulish",sans-serif;cursor:pointer;display:inline-grid;place-items:center;
+  }
+  .add:active{background:var(--accent);color:var(--surface)}
+  .add-cell{grid-column:2;grid-row:2 / span 3;align-self:end;justify-self:end}
+  body.ordering .item .desc, body.ordering .item .opts, body.ordering .item .tags{grid-column:1}
+  body.ordering{padding-bottom:92px}
+  .dock{
+    position:fixed;left:0;right:0;bottom:0;z-index:20;display:none;
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+    background:color-mix(in srgb,var(--bg) 94%,transparent);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);
+  }
+  body.ordering .dock{display:block}
+  .dock-inner{max-width:760px;margin:0 auto;display:flex;gap:10px}
+  .btn{
+    border:1px solid var(--line);background:var(--surface);color:var(--ink);font:700 14px/1.2 "Mulish",sans-serif;
+    border-radius:999px;padding:13px 16px;cursor:pointer;
+  }
+  .btn.primary{
+    background:var(--chip-on-bg);color:var(--chip-on-ink);border-color:var(--chip-on-bg);flex:1;
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+  }
+  .btn.primary:disabled{opacity:.45;cursor:default}
+  .btn.block{width:100%;display:flex;justify-content:center;margin-top:8px}
+  .btn.ghost{background:transparent}
+  .count{
+    background:var(--chip-on-ink);color:var(--chip-on-bg);border-radius:999px;min-width:22px;height:22px;
+    display:inline-grid;place-items:center;font-size:12px;padding:0 6px;margin-right:8px;
+  }
+  .scrim{position:fixed;inset:0;background:rgba(30,25,35,.45);z-index:30;display:none}
+  .scrim.open{display:block}
+  .sheet{
+    position:fixed;left:0;right:0;bottom:0;z-index:31;background:var(--surface);color:var(--ink);
+    border-radius:24px 24px 0 0;max-height:88vh;overflow:auto;max-width:760px;margin:0 auto;
+    padding:24px 18px calc(20px + env(safe-area-inset-bottom));
+    transform:translateY(105%);transition:transform .25s ease;box-shadow:0 -10px 40px rgba(0,0,0,.2);
+  }
+  .sheet.open{transform:none}
+  .sheet h3{font-family:"Bodoni Moda",Georgia,serif;font-style:italic;font-weight:400;font-size:28px;line-height:1.15;margin:0 0 4px;color:var(--accent)}
+  .sheet .muted{color:var(--ink-soft);font-size:13px;margin:0 0 16px}
+  .choice{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;
+    border:1px solid var(--line);border-radius:14px;margin-bottom:8px;cursor:pointer;font-size:15px;
+  }
+  .choice input{accent-color:var(--slate);width:18px;height:18px;margin:0}
+  .choice:has(input:checked){border-color:var(--accent);background:var(--surface-2)}
+  .stepper{display:inline-flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:999px;padding:2px}
+  .stepper button{width:32px;height:32px;border-radius:50%;border:0;background:transparent;color:var(--accent);font:700 18px/1 "Mulish",sans-serif;cursor:pointer}
+  .stepper span{min-width:20px;text-align:center;font-weight:700;font-size:14px}
+  .line{display:grid;grid-template-columns:1fr auto;gap:8px 12px;padding:12px 0;border-bottom:1px dashed var(--line);align-items:center}
+  .line .ln{font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.03em}
+  .line .lc{font-size:13px;color:var(--ink-soft)}
+  .line .lr{display:flex;align-items:center;gap:10px}
+  .lp{font-family:"Bodoni Moda",Georgia,serif;color:var(--price);font-size:16px;min-width:58px;text-align:right}
+  .sum{display:flex;justify-content:space-between;align-items:baseline;margin:16px 0 10px;font-weight:700}
+  .sum b{font-family:"Bodoni Moda",Georgia,serif;font-size:24px;color:var(--price);font-weight:500}
+  .sheet label.lbl{font-size:13px;font-weight:700;display:block;margin-top:6px}
+  .sheet textarea{
+    width:100%;border:1px solid var(--line);border-radius:14px;padding:12px;font:inherit;font-size:15px;
+    background:var(--bg);color:var(--ink);resize:vertical;min-height:64px;margin:6px 0 6px;
+  }
+  .row{display:flex;gap:10px;align-items:center;justify-content:space-between;margin:16px 0 6px;font-weight:600}
+  .err{color:#b3261e;font-size:13px;margin:8px 0 0;text-align:center}
+  .toast{
+    position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top));transform:translateX(-50%) translateY(-16px);background:var(--ink);color:var(--bg);
+    padding:9px 16px;border-radius:999px;font-size:13px;font-weight:700;opacity:0;transition:.2s;z-index:40;box-shadow:0 8px 24px -8px rgba(0,0,0,.35);
+    pointer-events:none;max-width:calc(100% - 32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%)}
+  .done{text-align:center;padding:8px 0 4px}
+  .done .big{font-family:"Bodoni Moda",Georgia,serif;font-style:italic;font-size:32px;color:var(--accent);margin:4px 0 8px}
+  .done p{color:var(--ink-soft);margin:0 0 10px}
+  .mesa-tag{display:inline-block;margin-top:14px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--price)}
 </style>
 </head>
 <body>
@@ -201,6 +278,7 @@
       <span class="badge">Café da manhã o dia todo</span>
       <span class="badge">Doces americanos da casa</span>
     </div>
+    <div class="mesa-tag" id="mesaTag"></div>
   </div>
 </header>
 
@@ -249,6 +327,17 @@
   </div>
 </footer>
 
+<div class="dock" id="dock"><div class="dock-inner">
+  <button class="btn" id="mesaBtn" type="button">Mesa <span id="mesaN"></span></button>
+  <button class="btn primary" id="cartBtn" type="button" disabled>
+    <span><span class="count" id="cartCount">0</span>Ver pedido</span><span id="cartTotal">R$ 0</span>
+  </button>
+</div></div>
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Pedido"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="config.js"></script>
 <script>
 const MENU = [
   { id:"aperitivos", nome:"Os Aperitivos", itens:[
@@ -376,11 +465,13 @@ function render(q=""){
       let id = slug(it.n); if(seen.has(id) && !q) id += "-" + c.id; seen.add(id);
       const price = it.v ? `<div class="price">${it.v.map(([k,v])=>`<small>${esc(k)}</small>${brl(v)}`).join("")}</div>`
                          : `<div class="price">${brl(it.p)}</div>`;
+      const add = PEDIDOS ? `<button class="add" type="button" data-k="${c.id}|${c.itens.indexOf(it)}" aria-label="Adicionar ${esc(it.n)} ao pedido">+</button>` : "";
       html += `<article class="item" id="${id}">
         <h3>${hl(it.n,q)}</h3>${price}
         ${it.d?`<p class="desc">${hl(it.d,q)}</p>`:""}
         ${it.o?`<div class="opts">${it.o.map(o=>`<span class="opt">${hl(o,q)}</span>`).join("")}</div>`:""}
         ${it.t?`<div class="tags">${it.t.map(t=>`<span class="tag${t.startsWith("★")?" star":""}">${esc(t)}</span>`).join("")}</div>`:""}
+        ${add?`<div class="add-cell">${add}</div>`:""}
       </article>`;
     }
     html += `</div></section>`;
@@ -429,6 +520,164 @@ document.getElementById("theme").addEventListener("click",()=>{
   root.dataset.theme = dark ? "light" : "dark";
   try{ localStorage.setItem("condi-theme", root.dataset.theme); }catch(e){}
 });
+
+/* =====================================================================
+   PEDIDO PELA MESA
+   O link de cada mesa termina com ?mesa=NÚMERO (ex.: ...?mesa=5).
+   Sem esse número o cardápio funciona só para consulta.
+   ===================================================================== */
+const CFG = window.CONDI_CONFIG || {};
+const MESA = (new URLSearchParams(location.search).get("mesa") || "").replace(/\D/g,"").slice(0,3);
+const PEDIDOS = !!MESA && +MESA > 0;
+const sheet = document.getElementById("sheet"), scrim = document.getElementById("scrim");
+const money = v => "R$ " + (Number.isInteger(v) ? v : v.toFixed(2).replace(".",","));
+const CART_KEY = "condi-pedido-mesa-" + MESA;
+let cart = [];
+
+if(PEDIDOS){
+  document.body.classList.add("ordering");
+  document.getElementById("mesaN").textContent = MESA;
+  document.getElementById("mesaTag").textContent = "Você está na mesa " + MESA;
+  try{ cart = JSON.parse(sessionStorage.getItem(CART_KEY) || "[]"); }catch(e){ cart = []; }
+  updateDock();
+}
+
+function saveCart(){ try{ sessionStorage.setItem(CART_KEY, JSON.stringify(cart)); }catch(e){} }
+function cartCount(){ return cart.reduce((s,l)=>s+l.qtd,0); }
+function cartTotal(){ return cart.reduce((s,l)=>s+l.qtd*l.preco,0); }
+function updateDock(){
+  const n = cartCount();
+  document.getElementById("cartCount").textContent = n;
+  document.getElementById("cartTotal").textContent = money(cartTotal());
+  document.getElementById("cartBtn").disabled = !n;
+}
+let toastT;
+function toast(msg){
+  const t = document.getElementById("toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove("show"), 1800);
+}
+function openSheet(html){ document.getElementById("toast").classList.remove("show"); sheet.innerHTML = html; sheet.classList.add("open"); scrim.classList.add("open"); sheet.scrollTop = 0; }
+function closeSheet(){ sheet.classList.remove("open"); scrim.classList.remove("open"); }
+scrim.addEventListener("click", closeSheet);
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeSheet(); });
+
+function addToCart(nome, escolha, preco, qtd){
+  const k = nome + "|" + (escolha || "");
+  const ex = cart.find(l=>l.k===k);
+  if(ex) ex.qtd += qtd; else cart.push({k, nome, escolha: escolha || "", preco, qtd});
+  saveCart(); updateDock();
+  toast(`${qtd}× ${nome} no pedido`);
+}
+
+// Toque no "+": item simples entra direto; item com opções abre a escolha
+menuEl.addEventListener("click", e=>{
+  const b = e.target.closest(".add"); if(!b) return;
+  const [cid, i] = b.dataset.k.split("|");
+  const it = MENU.find(c=>c.id===cid).itens[+i];
+  if(it.v || it.o) openPicker(it); else addToCart(it.n, "", it.p, 1);
+});
+
+function openPicker(it){
+  const choices = it.v ? it.v.map(([k,v])=>({label:k, preco:v})) : it.o.map(o=>({label:o, preco:it.p}));
+  openSheet(`<h3>${esc(it.n)}</h3><p class="muted">Escolha uma opção</p>
+    <form id="pick">
+      ${choices.map((c,i)=>`<label class="choice"><span>${esc(c.label)}</span>
+        <span style="display:flex;align-items:center;gap:12px"><span class="lp">${money(c.preco)}</span>
+        <input type="radio" name="c" value="${i}" ${i===0?"checked":""}></span></label>`).join("")}
+      <div class="row"><span>Quantidade</span>
+        <span class="stepper"><button type="button" data-d="-1" aria-label="Menos">−</button><span id="pq">1</span><button type="button" data-d="1" aria-label="Mais">+</button></span></div>
+      <button class="btn primary block" type="submit">Adicionar ao pedido</button>
+    </form>`);
+  let qtd = 1;
+  sheet.querySelectorAll("[data-d]").forEach(b=>b.addEventListener("click",()=>{
+    qtd = Math.max(1, Math.min(20, qtd + +b.dataset.d)); document.getElementById("pq").textContent = qtd;
+  }));
+  document.getElementById("pick").addEventListener("submit", e=>{
+    e.preventDefault();
+    const c = choices[+new FormData(e.target).get("c")];
+    addToCart(it.n, c.label, c.preco, qtd); closeSheet();
+  });
+}
+
+function openCart(){
+  if(!cart.length){ closeSheet(); return; }
+  openSheet(`<h3>Seu pedido</h3><p class="muted">Mesa ${MESA} · o pagamento é feito no final, com o garçom</p>
+    <div id="lines">${cart.map((l,i)=>`<div class="line">
+      <div><div class="ln">${esc(l.nome)}</div>${l.escolha?`<div class="lc">${esc(l.escolha)}</div>`:""}</div>
+      <div class="lr"><span class="stepper"><button type="button" data-i="${i}" data-d="-1" aria-label="Menos">−</button><span>${l.qtd}</span><button type="button" data-i="${i}" data-d="1" aria-label="Mais">+</button></span>
+      <span class="lp">${money(l.preco*l.qtd)}</span></div></div>`).join("")}</div>
+    <div class="sum"><span>Total</span><b>${money(cartTotal())}</b></div>
+    <label class="lbl" for="obs">Alguma observação?</label>
+    <textarea id="obs" maxlength="300" placeholder="Ex.: sem cebola, carne ao ponto, trazer junto com as bebidas…"></textarea>
+    <button class="btn primary block" id="send" type="button">Enviar pedido para a cozinha</button>
+    <button class="btn ghost block" type="button" id="more">Continuar escolhendo</button>
+    <p class="err" id="err" hidden></p>`);
+  sheet.querySelectorAll("[data-i]").forEach(b=>b.addEventListener("click",()=>{
+    const l = cart[+b.dataset.i]; l.qtd += +b.dataset.d;
+    if(l.qtd <= 0) cart.splice(+b.dataset.i, 1);
+    saveCart(); updateDock(); openCart();
+  }));
+  document.getElementById("more").addEventListener("click", closeSheet);
+  document.getElementById("send").addEventListener("click", async ev=>{
+    const btn = ev.currentTarget, err = document.getElementById("err");
+    btn.disabled = true; btn.textContent = "Enviando…"; err.hidden = true;
+    try{
+      await enviar("pedido", {
+        itens: cart.map(l=>({nome:l.nome, escolha:l.escolha, qtd:l.qtd, preco:l.preco})),
+        observacao: document.getElementById("obs").value.trim() || null,
+        total: cartTotal()
+      });
+      cart = []; saveCart(); updateDock();
+      showDone("Pedido enviado!", "A cozinha já recebeu o seu pedido. Daqui a pouquinho ele chega na sua mesa ♥");
+    }catch(e){
+      btn.disabled = false; btn.textContent = "Tentar enviar de novo";
+      err.textContent = e.message === "config" ? "O sistema de pedidos ainda não foi ativado. Por favor, chame o garçom." : "Não conseguimos enviar agora. Verifique a internet e tente de novo, ou chame o garçom.";
+      err.hidden = false;
+    }
+  });
+}
+
+function openMesa(){
+  openSheet(`<h3>Mesa ${MESA}</h3><p class="muted">Precisa de alguma coisa? A equipe é avisada na hora.</p>
+    <button class="btn primary block" type="button" data-call="garcom">Chamar o garçom</button>
+    <button class="btn primary block" type="button" data-call="conta">Pedir a conta</button>
+    <button class="btn ghost block" type="button" id="back">Voltar</button>
+    <p class="err" id="err" hidden></p>`);
+  document.getElementById("back").addEventListener("click", closeSheet);
+  sheet.querySelectorAll("[data-call]").forEach(b=>b.addEventListener("click", async ()=>{
+    const tipo = b.dataset.call;
+    sheet.querySelectorAll("[data-call]").forEach(x=>x.disabled = true);
+    try{
+      await enviar(tipo, {itens: []});
+      showDone(tipo === "conta" ? "Conta solicitada" : "Garçom chamado",
+               tipo === "conta" ? "Já já levamos a conta até a sua mesa." : "Alguém da equipe já está indo até você.");
+    }catch(e){
+      sheet.querySelectorAll("[data-call]").forEach(x=>x.disabled = false);
+      const err = document.getElementById("err");
+      err.textContent = e.message === "config" ? "O sistema ainda não foi ativado. Por favor, acene para a equipe." : "Não conseguimos avisar agora. Verifique a internet e tente de novo.";
+      err.hidden = false;
+    }
+  }));
+}
+
+function showDone(title, text){
+  openSheet(`<div class="done"><div class="mesa-tag">Mesa ${MESA}</div><div class="big">${esc(title)}</div>
+    <p>${esc(text)}</p><button class="btn primary block" type="button" id="ok">Voltar ao cardápio</button></div>`);
+  document.getElementById("ok").addEventListener("click", closeSheet);
+}
+
+async function enviar(tipo, dados){
+  if(!CFG.url || !CFG.key) throw new Error("config");
+  const headers = {"apikey": CFG.key, "Content-Type": "application/json", "Prefer": "return=minimal"};
+  if(!CFG.key.startsWith("sb_")) headers["Authorization"] = "Bearer " + CFG.key;
+  const r = await fetch(CFG.url.replace(/\/$/,"") + "/rest/v1/pedidos", {
+    method: "POST", headers, body: JSON.stringify({mesa: +MESA, tipo, ...dados})
+  });
+  if(!r.ok) throw new Error("http " + r.status);
+}
+
+document.getElementById("cartBtn").addEventListener("click", openCart);
+document.getElementById("mesaBtn").addEventListener("click", openMesa);
 
 render();
 </script>

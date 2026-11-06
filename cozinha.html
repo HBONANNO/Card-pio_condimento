@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Painel da Cozinha · Condimento</title>
+<meta name="theme-color" content="#f3d9d6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fdf6f4; --surface:#ffffff; --surface-2:#f8e8e5; --ink:#333b4f; --ink-soft:#6b7287;
+    --accent:#4d5977; --price:#927a5d; --line:#ecd9d5; --rose:#ebc6c1;
+    --new:#e0708a; --new-bg:#fdecef; --prep:#c98a2b; --prep-bg:#fbf1e1; --ok:#4f8a6b; --ok-bg:#e9f3ed;
+    --on-accent:#ffffff; --shadow:0 1px 2px rgba(77,89,119,.06),0 8px 24px -12px rgba(77,89,119,.2);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1f1b1f; --surface:#2a2429; --surface-2:#342b31; --ink:#f4e9e7; --ink-soft:#c3b3b5;
+      --accent:#f0c2c5; --price:#d9c2a0; --line:#43363d; --rose:#6b4650;
+      --new:#f08aa1; --new-bg:#4a2a33; --prep:#e3b062; --prep-bg:#45381f; --ok:#86c3a2; --ok-bg:#22382d;
+      --on-accent:#2a2429; --shadow:0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1f1b1f; --surface:#2a2429; --surface-2:#342b31; --ink:#f4e9e7; --ink-soft:#c3b3b5;
+    --accent:#f0c2c5; --price:#d9c2a0; --line:#43363d; --rose:#6b4650;
+    --new:#f08aa1; --new-bg:#4a2a33; --prep:#e3b062; --prep-bg:#45381f; --ok:#86c3a2; --ok-bg:#22382d;
+    --on-accent:#2a2429; --shadow:0 8px 24px -12px rgba(0,0,0,.6);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Mulish","Avenir Next",system-ui,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased}
+  button{font:inherit;cursor:pointer}
+  .logo{font-family:"Bodoni Moda","Didot",Georgia,serif;font-style:italic;color:var(--accent);line-height:1}
+
+  header.top{
+    position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    padding:12px 16px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:baseline;gap:12px}
+  .brand .logo{font-size:30px}
+  .brand small{letter-spacing:.25em;text-transform:uppercase;font-size:11px;font-weight:700;color:var(--price)}
+  .tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .pill{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:9px 14px;font-size:13px;font-weight:700}
+  .pill.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+  .live{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--ink-soft)}
+  .live i{width:9px;height:9px;border-radius:50%;background:var(--ok);display:inline-block}
+  .live.off i{background:#b3261e}
+
+  main{padding:16px;max-width:1400px;margin:0 auto}
+  .calls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .call{
+    display:flex;align-items:center;gap:14px;background:var(--new-bg);border:2px solid var(--new);border-radius:16px;padding:12px 14px;
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  .call b{font-size:18px}
+  .call span{font-size:13px;color:var(--ink-soft)}
+  @keyframes pulse{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--new) 25%,transparent)}}
+
+  .board{display:grid;gap:16px;grid-template-columns:1fr}
+  @media (min-width:900px){.board{grid-template-columns:repeat(3,1fr)}}
+  .col h2{display:flex;align-items:center;gap:10px;margin:0 0 10px;font-size:13px;letter-spacing:.2em;text-transform:uppercase}
+  .col h2 .n{min-width:26px;height:26px;border-radius:999px;display:inline-grid;place-items:center;font-size:13px;letter-spacing:0;color:#fff;padding:0 8px}
+  .col.novo h2{color:var(--new)} .col.novo h2 .n{background:var(--new)}
+  .col.preparando h2{color:var(--prep)} .col.preparando h2 .n{background:var(--prep)}
+  .col.entregue h2{color:var(--ok)} .col.entregue h2 .n{background:var(--ok)}
+  .empty{border:1.5px dashed var(--line);border-radius:16px;padding:22px;text-align:center;color:var(--ink-soft);font-size:14px}
+
+  .order{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:14px 16px;margin-bottom:12px;border-left:6px solid var(--line)}
+  .novo .order{border-left-color:var(--new)}
+  .preparando .order{border-left-color:var(--prep)}
+  .entregue .order{border-left-color:var(--ok);opacity:.8}
+  .order.fresh{animation:flash 1s ease 3}
+  @keyframes flash{50%{background:var(--new-bg)}}
+  .oh{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .mesa{font-size:24px;font-weight:800}
+  .mesa small{font-size:12px;font-weight:700;color:var(--ink-soft);margin-left:6px}
+  .ago{font-size:13px;font-weight:700;color:var(--ink-soft);white-space:nowrap}
+  .ago.late{color:#b3261e}
+  ul.items{list-style:none;margin:10px 0;padding:0}
+  ul.items li{padding:6px 0;border-top:1px dashed var(--line);font-size:16px}
+  ul.items li:first-child{border-top:0}
+  ul.items b{display:inline-block;min-width:30px}
+  ul.items em{display:block;font-style:normal;font-size:13px;color:var(--ink-soft);margin-left:30px}
+  .obs{background:var(--prep-bg);border-radius:12px;padding:8px 10px;font-size:14px;margin:8px 0}
+  .obs b{color:var(--prep)}
+  .of{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+  .tot{font-family:"Bodoni Moda",Georgia,serif;color:var(--price);font-size:17px}
+  .act{border:0;border-radius:999px;padding:11px 16px;font-weight:800;font-size:14px;color:#fff}
+  .act.prep{background:var(--prep)} .act.ok{background:var(--ok)}
+  .act.undo{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .act:disabled{opacity:.5}
+
+  /* Login */
+  .login{max-width:380px;margin:9vh auto;padding:0 16px;text-align:center}
+  .login .logo{font-size:56px}
+  .login p{color:var(--ink-soft)}
+  .login form{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow);text-align:left;margin-top:22px}
+  .login label{display:block;font-size:13px;font-weight:700;margin:10px 0 6px}
+  .login input{width:100%;height:46px;border:1px solid var(--line);border-radius:12px;padding:0 12px;font:inherit;font-size:16px;background:var(--bg);color:var(--ink)}
+  .login button{width:100%;margin-top:18px;height:48px;border:0;border-radius:999px;background:var(--accent);color:var(--on-accent);font-weight:800;font-size:15px}
+  .msg{color:#b3261e;font-size:14px;margin-top:12px;text-align:center}
+  .setup{background:var(--prep-bg);border-radius:16px;padding:16px;text-align:left;font-size:14px;margin-top:22px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="config.js"></script>
+<script>
+const CFG = window.CONDI_CONFIG || {};
+const BASE = (CFG.url || "").replace(/\/$/, "");
+const app = document.getElementById("app");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const money = v => "R$ " + Number(v || 0).toFixed(2).replace(".", ",").replace(",00", "");
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k, v){ try{ v == null ? localStorage.removeItem(k) : localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+let session = store.get("condi-cozinha-sessao");
+
+/* ---------- Autenticação (Supabase Auth) ---------- */
+function keyHeaders(){
+  const h = {"apikey": CFG.key, "Content-Type": "application/json"};
+  return h;
+}
+async function auth(grant, body){
+  const r = await fetch(`${BASE}/auth/v1/token?grant_type=${grant}`, {method:"POST", headers:keyHeaders(), body:JSON.stringify(body)});
+  const j = await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(j.error_description || j.msg || j.error || "erro");
+  session = {access_token:j.access_token, refresh_token:j.refresh_token, expires_at:j.expires_at || (Date.now()/1000 + (j.expires_in||3600))};
+  store.set("condi-cozinha-sessao", session);
+}
+async function api(path, opts = {}, retry = true){
+  if(session && Date.now()/1000 > session.expires_at - 60){
+    try{ await auth("refresh_token", {refresh_token: session.refresh_token}); }catch(e){ logout(); throw e; }
+  }
+  const r = await fetch(BASE + path, {...opts, headers:{...keyHeaders(), "Authorization":"Bearer " + session.access_token, ...(opts.headers||{})}});
+  if(r.status === 401 && retry){
+    try{ await auth("refresh_token", {refresh_token: session.refresh_token}); }catch(e){ logout(); throw e; }
+    return api(path, opts, false);
+  }
+  if(!r.ok) throw new Error("http " + r.status);
+  return r.status === 204 ? null : r.json();
+}
+function logout(){ session = null; store.set("condi-cozinha-sessao", null); stopPolling(); showLogin(); }
+
+/* ---------- Tela de login ---------- */
+function showLogin(msg){
+  const configured = BASE && CFG.key;
+  app.innerHTML = `<div class="login">
+    <div class="logo">Condimento</div>
+    <p>Painel da cozinha</p>
+    ${configured ? `<form id="lf">
+      <label for="em">E-mail da equipe</label><input id="em" type="email" autocomplete="username" required>
+      <label for="pw">Senha</label><input id="pw" type="password" autocomplete="current-password" required>
+      <button type="submit">Entrar</button>
+      ${msg ? `<div class="msg">${esc(msg)}</div>` : ""}
+    </form>` : `<div class="setup"><b>Falta ativar o sistema de pedidos.</b><br>Preencha o arquivo <code>config.js</code> com os dados do Supabase.</div>`}
+  </div>`;
+  const f = document.getElementById("lf");
+  if(f) f.addEventListener("submit", async e=>{
+    e.preventDefault();
+    const b = f.querySelector("button"); b.disabled = true; b.textContent = "Entrando…";
+    try{ await auth("password", {email:f.em.value.trim(), password:f.pw.value}); showBoard(); }
+    catch(err){ showLogin("E-mail ou senha incorretos."); }
+  });
+}
+
+/* ---------- Painel ---------- */
+let orders = [], known = null, pollT = null, soundOn = false, audioCtx = null, wake = null, online = true;
+
+function showBoard(){
+  app.innerHTML = `<header class="top">
+      <div class="brand"><span class="logo">Condimento</span><small>Cozinha</small></div>
+      <div class="tools">
+        <span class="live" id="live"><i></i><span>Ao vivo</span></span>
+        <button class="pill" id="snd" type="button">Ativar som</button>
+        <button class="pill" id="out" type="button">Sair</button>
+      </div>
+    </header>
+    <main><div class="calls" id="calls"></div><div class="board" id="board"></div></main>`;
+  document.getElementById("out").addEventListener("click", logout);
+  document.getElementById("snd").addEventListener("click", toggleSound);
+  poll(); pollT = setInterval(poll, 4000);
+  setInterval(draw, 30000);
+}
+function stopPolling(){ clearInterval(pollT); pollT = null; known = null; }
+
+async function poll(){
+  const since = new Date(Date.now() - 12*3600*1000).toISOString();
+  try{
+    const data = await api(`/rest/v1/pedidos?select=*&created_at=gte.${encodeURIComponent(since)}&order=created_at.asc`);
+    online = true;
+    const fresh = known ? data.filter(o => !known.has(o.id) && o.status === "novo") : [];
+    known = new Set(data.map(o => o.id));
+    orders = data;
+    draw(fresh.map(o => o.id));
+    if(fresh.length){ beep(); flashTitle(fresh.length); }
+  }catch(e){ online = false; draw(); }
+}
+
+function ago(ts){
+  const m = Math.floor((Date.now() - new Date(ts)) / 60000);
+  return m < 1 ? "agora" : m < 60 ? `há ${m} min` : `há ${Math.floor(m/60)}h${String(m%60).padStart(2,"0")}`;
+}
+function hora(ts){ return new Date(ts).toLocaleTimeString("pt-BR", {hour:"2-digit", minute:"2-digit"}); }
+
+function draw(freshIds = []){
+  const live = document.getElementById("live"); if(!live) return;
+  live.classList.toggle("off", !online);
+  live.querySelector("span").textContent = online ? "Ao vivo" : "Sem conexão";
+
+  const calls = orders.filter(o => o.tipo !== "pedido" && o.status !== "entregue");
+  document.getElementById("calls").innerHTML = calls.map(o => `<div class="call">
+      <div><b>Mesa ${o.mesa}</b> ${o.tipo === "conta" ? "pediu a conta" : "chamou o garçom"}<br><span>${ago(o.created_at)} · ${hora(o.created_at)}</span></div>
+      <button class="act ok" data-id="${o.id}" data-to="entregue" type="button">Atendido</button></div>`).join("");
+
+  const pedidos = orders.filter(o => o.tipo === "pedido");
+  const cols = [
+    ["novo", "Novos", pedidos.filter(o => o.status === "novo")],
+    ["preparando", "Preparando", pedidos.filter(o => o.status === "preparando")],
+    ["entregue", "Entregues", pedidos.filter(o => o.status === "entregue").reverse().slice(0, 15)],
+  ];
+  document.getElementById("board").innerHTML = cols.map(([st, titulo, list]) => `<section class="col ${st}">
+      <h2>${titulo} <span class="n">${list.length}</span></h2>
+      ${list.length ? list.map(o => card(o, st, freshIds.includes(o.id))).join("") : `<div class="empty">${st === "novo" ? "Nenhum pedido novo" : "Nada por aqui"}</div>`}
+    </section>`).join("");
+}
+
+function card(o, st, fresh){
+  const min = (Date.now() - new Date(o.created_at)) / 60000;
+  const btn = st === "novo" ? `<button class="act prep" data-id="${o.id}" data-to="preparando" type="button">Começar a preparar</button>`
+            : st === "preparando" ? `<button class="act ok" data-id="${o.id}" data-to="entregue" type="button">Entregue na mesa</button>`
+            : `<button class="act undo" data-id="${o.id}" data-to="preparando" type="button">Desfazer</button>`;
+  return `<article class="order${fresh ? " fresh" : ""}">
+    <div class="oh"><div class="mesa">Mesa ${o.mesa}<small>#${o.id}</small></div>
+      <div class="ago${st !== "entregue" && min > 20 ? " late" : ""}">${ago(o.created_at)} · ${hora(o.created_at)}</div></div>
+    <ul class="items">${(o.itens || []).map(i => `<li><b>${Number(i.qtd)}×</b>${esc(i.nome)}${i.escolha ? `<em>${esc(i.escolha)}</em>` : ""}</li>`).join("")}</ul>
+    ${o.observacao ? `<div class="obs"><b>Obs.:</b> ${esc(o.observacao)}</div>` : ""}
+    <div class="of"><span class="tot">${o.total != null ? money(o.total) : ""}</span>${btn}</div>
+  </article>`;
+}
+
+document.addEventListener("click", async e=>{
+  const b = e.target.closest("[data-to]"); if(!b) return;
+  b.disabled = true;
+  try{
+    await api(`/rest/v1/pedidos?id=eq.${+b.dataset.id}`, {method:"PATCH", headers:{"Prefer":"return=minimal"}, body:JSON.stringify({status:b.dataset.to})});
+    const o = orders.find(x => x.id === +b.dataset.id); if(o) o.status = b.dataset.to;
+    draw();
+  }catch(err){ b.disabled = false; alert("Não foi possível atualizar. Verifique a internet."); }
+});
+
+/* ---------- Som e tela sempre ligada ---------- */
+async function toggleSound(){
+  soundOn = !soundOn;
+  const b = document.getElementById("snd");
+  b.classList.toggle("on", soundOn); b.textContent = soundOn ? "Som ligado" : "Ativar som";
+  if(soundOn){
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    await audioCtx.resume(); beep();
+    try{ wake = await navigator.wakeLock?.request("screen"); }catch(e){}
+  }
+}
+document.addEventListener("visibilitychange", async ()=>{
+  if(soundOn && document.visibilityState === "visible"){ try{ wake = await navigator.wakeLock?.request("screen"); }catch(e){} }
+});
+function beep(){
+  if(!soundOn || !audioCtx) return;
+  [0, .22, .44].forEach((t, i)=>{
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = "sine"; o.frequency.value = i === 2 ? 1175 : 880;
+    g.gain.setValueAtTime(.0001, audioCtx.currentTime + t);
+    g.gain.exponentialRampToValueAtTime(.35, audioCtx.currentTime + t + .02);
+    g.gain.exponentialRampToValueAtTime(.0001, audioCtx.currentTime + t + .2);
+    o.connect(g).connect(audioCtx.destination); o.start(audioCtx.currentTime + t); o.stop(audioCtx.currentTime + t + .22);
+  });
+}
+let titleT;
+function flashTitle(n){
+  clearInterval(titleT); let on = false, k = 0;
+  titleT = setInterval(()=>{ document.title = (on = !on) ? `(${n}) Pedido novo!` : "Painel da Cozinha · Condimento"; if(++k > 12){ clearInterval(titleT); document.title = "Painel da Cozinha · Condimento"; } }, 700);
+}
+
+// Tema (segue o aparelho; ?tema=escuro força o escuro)
+if(/tema=escuro/.test(location.search)) document.documentElement.dataset.theme = "dark";
+
+if(session && BASE && CFG.key) showBoard(); else showLogin();
+</script>
+</body>
