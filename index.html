@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Condimento Café · Cardápio</title>
+<meta name="description" content="Cardápio digital do Condimento Café & Bistrô — Rua Itapura, 1400, Tatuapé, São Paulo.">
+<meta name="theme-color" content="#f3d9d6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rose-50:#fdf6f4;
+    --rose-100:#f8e8e5;
+    --rose-200:#f3d9d6;
+    --rose-300:#ebc6c1;
+    --rose-400:#d6a7a1;
+    --pink:#e0708a;
+    --slate:#4d5977;
+    --slate-dark:#333b4f;
+    --gold:#927a5d;
+    --gold-soft:#beb09f;
+    --cream:#fbf8f2;
+
+    --bg:var(--rose-50);
+    --surface:#ffffff;
+    --surface-2:var(--rose-100);
+    --ink:var(--slate-dark);
+    --ink-soft:#6b7287;
+    --accent:var(--slate);
+    --price:var(--gold);
+    --line:#ecd9d5;
+    --awning-a:var(--rose-300);
+    --awning-b:#ffffff;
+    --chip-on-bg:var(--slate);
+    --chip-on-ink:#ffffff;
+    --shadow:0 1px 2px rgba(77,89,119,.06),0 8px 24px -12px rgba(77,89,119,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1f1b1f; --surface:#2a2429; --surface-2:#342b31; --ink:#f4e9e7; --ink-soft:#c3b3b5;
+      --accent:#f0c2c5; --price:#d9c2a0; --line:#43363d; --awning-a:#b9848a; --awning-b:#2a2429;
+      --chip-on-bg:#f0c2c5; --chip-on-ink:#2a2429; --shadow:0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1f1b1f; --surface:#2a2429; --surface-2:#342b31; --ink:#f4e9e7; --ink-soft:#c3b3b5;
+    --accent:#f0c2c5; --price:#d9c2a0; --line:#43363d; --awning-a:#b9848a; --awning-b:#2a2429;
+    --chip-on-bg:#f0c2c5; --chip-on-ink:#2a2429; --shadow:0 8px 24px -12px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Mulish","Avenir Next","Avenir",system-ui,sans-serif;font-weight:400;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif}
+  a{color:inherit}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+  /* ---------- Toldo (awning) ---------- */
+  .awning{
+    height:46px;
+    background:repeating-linear-gradient(90deg,var(--awning-a) 0 38px,var(--awning-b) 38px 76px);
+    position:relative;
+  }
+  .awning::after{
+    content:"";position:absolute;left:0;right:0;bottom:-18px;height:19px;
+    background:
+      radial-gradient(circle at 19px 0,var(--awning-a) 18.5px,transparent 19px) 0 0/76px 19px repeat-x,
+      radial-gradient(circle at 57px 0,var(--awning-b) 18.5px,transparent 19px) 0 0/76px 19px repeat-x;
+    filter:drop-shadow(0 3px 2px rgba(77,89,119,.12));
+  }
+
+  /* ---------- Cabeçalho ---------- */
+  header.hero{
+    background:linear-gradient(180deg,var(--rose-200),var(--bg));
+    padding:52px 0 28px;text-align:center;
+  }
+  :root[data-theme="dark"] header.hero{background:linear-gradient(180deg,#3a2c33,var(--bg))}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header.hero{background:linear-gradient(180deg,#3a2c33,var(--bg))}}
+  .since{letter-spacing:.32em;text-transform:uppercase;font-size:11px;color:var(--price);font-weight:600}
+  .logo{
+    font-family:"Bodoni Moda","Didot",Georgia,serif;font-style:italic;font-weight:400;
+    font-size:clamp(52px,14vw,86px);line-height:1;margin:10px 0 4px;color:var(--accent);
+    letter-spacing:-.01em;
+  }
+  .sub{letter-spacing:.42em;text-transform:uppercase;font-size:12px;color:var(--ink-soft);font-weight:600;padding-left:.42em}
+  .ornament{display:flex;align-items:center;gap:12px;justify-content:center;margin:20px auto 14px;color:var(--price);max-width:260px}
+  .ornament::before,.ornament::after{content:"";flex:1;height:1px;background:currentColor;opacity:.5}
+  .tagline{font-family:"Bodoni Moda",Georgia,serif;font-style:italic;font-size:19px;margin:0 auto;max-width:440px;color:var(--ink)}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+  .badge{
+    font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;
+    background:var(--surface);color:var(--accent);border:1px solid var(--line);
+  }
+
+  /* ---------- Barra de busca + categorias ---------- */
+  .bar{
+    position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 92%,transparent);
+    backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .bar-inner{padding:10px 16px 0;max-width:760px;margin:0 auto}
+  .search{
+    display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);
+    border-radius:999px;padding:0 14px;height:42px;
+  }
+  .search svg{flex:none;color:var(--ink-soft)}
+  .search input{
+    flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);
+    font:inherit;font-size:15px;
+  }
+  .search input::placeholder{color:var(--ink-soft)}
+  .theme-btn{
+    flex:none;border:0;background:transparent;color:var(--ink-soft);cursor:pointer;padding:4px;display:grid;place-items:center;
+  }
+  .chips{
+    display:flex;gap:8px;overflow-x:auto;padding:10px 0 12px;scrollbar-width:none;
+    -webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);mask-image:linear-gradient(90deg,#000 92%,transparent);
+  }
+  .chips::-webkit-scrollbar{display:none}
+  .chip{
+    flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+    font:600 13px/1 "Mulish",sans-serif;padding:9px 14px;border-radius:999px;cursor:pointer;
+    text-decoration:none;white-space:nowrap;transition:background .15s,color .15s;
+  }
+  .chip[aria-current="true"]{background:var(--chip-on-bg);color:var(--chip-on-ink);border-color:var(--chip-on-bg)}
+
+  /* ---------- Destaques ---------- */
+  .favs{margin:30px 0 6px}
+  .eyebrow{letter-spacing:.28em;text-transform:uppercase;font-size:11px;font-weight:700;color:var(--price);text-align:center}
+  .fav-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+  @media (min-width:620px){.fav-row{grid-template-columns:repeat(4,1fr)}}
+  .fav{
+    background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 14px 14px;
+    text-align:center;box-shadow:var(--shadow);cursor:pointer;color:inherit;font:inherit;
+  }
+  .fav .ico{font-size:26px;line-height:1}
+  .fav .n{font-family:"Bodoni Moda",Georgia,serif;font-style:italic;font-size:17px;margin-top:8px;line-height:1.2}
+  .fav .p{font-size:13px;color:var(--price);font-weight:700;margin-top:4px}
+
+  /* ---------- Seções ---------- */
+  section.cat{padding-top:34px;scroll-margin-top:118px}
+  .cat-head{text-align:center;margin-bottom:16px}
+  .cat-head h2{
+    font-family:"Bodoni Moda","Didot",Georgia,serif;font-style:italic;font-weight:400;
+    font-size:34px;line-height:1.1;margin:0;color:var(--accent);
+  }
+  .cat-head p{margin:6px 0 0;color:var(--ink-soft);font-size:13px}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:22px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .item{display:grid;grid-template-columns:1fr auto;gap:4px 14px;padding:16px 18px;border-top:1px dashed var(--line)}
+  .item:first-child{border-top:0}
+  .item h3{margin:0;font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;line-height:1.35}
+  .item .price{font-family:"Bodoni Moda",Georgia,serif;font-weight:500;font-size:18px;color:var(--price);white-space:nowrap;text-align:right}
+  .item .price small{font-family:"Mulish",sans-serif;font-size:11px;font-weight:600;color:var(--ink-soft);display:block;letter-spacing:.02em}
+  .item .desc{grid-column:1/-1;margin:0;color:var(--ink-soft);font-size:14px;font-weight:400}
+  .tags{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  .tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--surface-2);color:var(--accent)}
+  .tag.star{background:#f6e3c4;color:#7a5a2c}
+  :root[data-theme="dark"] .tag.star{background:#4a3c2a;color:#f0d6a8}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tag.star{background:#4a3c2a;color:#f0d6a8}}
+  .opts{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+  .opt{font-size:12px;padding:4px 10px;border-radius:8px;border:1px solid var(--line);color:var(--ink)}
+  .item mark{background:var(--rose-200);color:inherit;border-radius:3px;padding:0 1px}
+  :root[data-theme="dark"] .item mark{background:#6b4650}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .item mark{background:#6b4650}}
+  .empty{text-align:center;color:var(--ink-soft);padding:48px 0 0;display:none}
+
+  /* ---------- Rodapé ---------- */
+  footer{margin-top:48px;background:var(--surface-2);padding:34px 0 40px;text-align:center}
+  footer .logo{font-size:44px}
+  .info{display:grid;gap:18px;margin:22px 0 24px}
+  @media (min-width:620px){.info{grid-template-columns:repeat(3,1fr)}}
+  .info h4{margin:0 0 6px;letter-spacing:.24em;text-transform:uppercase;font-size:11px;color:var(--price)}
+  .info p{margin:0;font-size:14px}
+  .wa{
+    display:inline-flex;align-items:center;gap:8px;background:var(--chip-on-bg);color:var(--chip-on-ink);
+    text-decoration:none;font-weight:700;font-size:14px;padding:12px 20px;border-radius:999px;
+  }
+  .fine{font-size:12px;color:var(--ink-soft);margin-top:22px;max-width:480px;margin-inline:auto}
+</style>
+</head>
+<body>
+
+<div class="awning" aria-hidden="true"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="since">Tatuapé · São Paulo</div>
+    <h1 class="logo">Condimento</h1>
+    <div class="sub">Café &amp; Bistrô</div>
+    <div class="ornament" aria-hidden="true">♥</div>
+    <p class="tagline">Comida que abraça. Um cantinho charmoso para você esquecer a loucura de São Paulo.</p>
+    <div class="badges">
+      <span class="badge">☕ Café da manhã o dia todo</span>
+      <span class="badge">🍰 Doces americanos da casa</span>
+    </div>
+  </div>
+</header>
+
+<nav class="bar" aria-label="Categorias do cardápio">
+  <div class="bar-inner">
+    <label class="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Buscar no cardápio… (ex: nutella)" autocomplete="off" aria-label="Buscar no cardápio">
+      <button class="theme-btn" id="theme" type="button" aria-label="Alternar tema claro/escuro">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </label>
+    <div class="chips" id="chips"></div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="favs" id="favs">
+    <div class="eyebrow">Os queridinhos da casa</div>
+    <div class="fav-row">
+      <button class="fav" data-go="camembert-empanado"><div class="ico">🧀</div><div class="n">Camembert Empanado</div><div class="p">R$ 59</div></button>
+      <button class="fav" data-go="red-velvet"><div class="ico">🍰</div><div class="n">Red Velvet</div><div class="p">R$ 24</div></button>
+      <button class="fav" data-go="torre-de-nutella"><div class="ico">🥞</div><div class="n">Torre de Nutella</div><div class="p">R$ 36</div></button>
+      <button class="fav" data-go="pink-drink"><div class="ico">🍹</div><div class="n">Pink Drink</div><div class="p">R$ 28</div></button>
+    </div>
+  </div>
+
+  <div id="menu"></div>
+  <p class="empty" id="empty">Nada encontrado por aqui… tente outra palavra ♥</p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">Condimento</div>
+    <div class="sub">Café &amp; Bistrô</div>
+    <div class="info">
+      <div><h4>Endereço</h4><p>Rua Itapura, 1400<br>Tatuapé · São Paulo</p></div>
+      <div><h4>Horários</h4><p>Ter a Sex · 8h às 22h<br>Sáb · 9h às 22h<br>Dom · 9h às 17h</p></div>
+      <div><h4>Contato</h4><p>(11) 98368-0461<br><a href="https://www.condimento.com.br">condimento.com.br</a></p></div>
+    </div>
+    <a class="wa" href="https://wa.me/5511983680461" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.1.1.6-.1 1.2z"/></svg>
+      Pedir pelo WhatsApp
+    </a>
+    <p class="fine">Preços em reais (R$). Consulte disponibilidade no bistrô e no delivery. Os pratos não acompanham salada.</p>
+  </div>
+</footer>
+
+<script>
+const MENU = [
+  { id:"aperitivos", nome:"Os Aperitivos", icon:"🧀", itens:[
+    { n:"Camembert Empanado", p:59, d:"Ele mesmo!! O nosso queijo camembert empanado, servido com mel e pimenta-do-reino, há 10 anos sendo sucesso de vendas por aqui. Servido com pão tostado.", t:["★ Sucesso há 10 anos"] },
+    { n:"Burrata", p:69, d:"Burrata com tomates frescos, pesto de manjericão, redução de balsâmico e tapenade de azeitona. Acompanha fatias de pão de fermentação natural." },
+    { n:"Bruschetta Caprese", p:34, d:"Mussarela de búfala fresca, tomate confit, tapenade de azeitona e pesto de manjericão, montada sobre pão de fermentação natural." },
+    { n:"Fritas da Casa", p:29, d:"Batata frita de verdade!! Servida com aioli, nossa maionese de alho feita na casa." },
+    { n:"Croquete de \"Vó\"", p:36, d:"Croquete de carne, cremosinho, estilo casa da vó. Acompanha aioli verde feito na casa." },
+    { n:"Avocado Toast", p:29, d:"Avocado temperado, ovos mexidos, cebola roxa e tomate picadinhos, farofa de bacon e pimenta biquinho. Montado sobre pão de fermentação natural." },
+    { n:"Dadinho de Tapioca", p:29, d:"Clássicos dadinhos de tapioca com melaço de cana." },
+  ]},
+  { id:"saladas", nome:"As Saladas", icon:"🥗", itens:[
+    { n:"Caesar Salad", p:44, d:"Folhas, molho caesar tradicional, bacon, parmesão e croutons." },
+    { n:"Salada Juliana", p:44, d:"Alface, cenoura, palmito, tomate-cereja, batata palha feita na casa, lascas de parmesão e molho de salada da casa (mostarda)." },
+    { n:"Molho Salada da Casa", p:28, d:"O molho da nossa salada da casa! Feito aqui!! Pra você levar para a SUA CASA ♥", t:["300 ml","Para levar"] },
+  ]},
+  { id:"pratos", nome:"Os Pratos", icon:"🍽️", obs:"Os pratos não acompanham salada", itens:[
+    { n:"Parmegiana de Mignon", p:68, d:"Com arroz e chips de batata artesanal — mais crocante para o delivery (ou fritas caseiras: não chega como no bistrô, mas tem quem ama)." },
+    { n:"Filé Espanhol", p:87, d:"Mignon com molho de vinho, risoto de parmesão, alho confitado e tuile de parmesão." },
+    { n:"Angus em Crosta", p:87, d:"Alcatra de angus em crosta de ervas e castanha de caju, com risoto de cebola caramelizada, picles de cebola roxa e cebola pérola grelhada." },
+    { n:"Milanesa de Frango", p:62, d:"Com risoto de limão-siciliano." },
+    { n:"Penne Caprese", p:62, d:"Massa com molho de tomate fresco, búfala e molho pesto." },
+    { n:"Peixe Crocante Empanado no Coco", p:62, d:"Com purê de batata e vinagrete de feijão-fradinho." },
+    { n:"Chicken Alfredo Pasta", p:52, d:"Um clássico americano com frango grelhado, gremolata e penne ao molho de queijo." },
+  ]},
+  { id:"carinhoso", nome:"O Carinhoso", icon:"🤍", obs:"Comidinha de casa, do jeitinho que abraça", itens:[
+    { n:"Picadinho", p:55, d:"Com arroz, feijão, farofa, ovo estalado e tartar de banana-da-terra.", t:["Terça a sexta"] },
+    { n:"Estrogonofe de Mignon", p:55, d:"Estrogonofe de mignon com arroz e batata palha feita na casa." },
+    { n:"Prato Kids", p:null, d:"Arroz, feijão, grelhado à escolha e chips de batata artesanal ou fritas caseiras.", v:[["Frango",44],["Mignon",52]] },
+  ]},
+  { id:"brunch", nome:"As Tortas & o Brunch", icon:"🥞", obs:"Café da manhã servido o dia todo", itens:[
+    { n:"Torta de Frango", p:34, d:"Torta de frango com crocante de ervas. Acrescente salada por mais R$ 6." },
+    { n:"Torta de Palmito", p:34, d:"Torta de palmito com crosta de parmesão. Acrescente salada por mais R$ 6." },
+    { n:"Avocado Toast", p:29, d:"Avocado temperado, ovos mexidos, cebola roxa e tomate picadinhos, farofa de bacon e pimenta biquinho, sobre pão de fermentação natural." },
+    { n:"Combinado Americano", p:36, d:"Ovos mexidos cremosos, bacon crocante, pão de fermentação natural tostado e panqueca americana com maple syrup." },
+    { n:"Combinado NY", p:36, d:"Ovos mexidos cremosos, bacon crocante, batata rösti e panqueca americana com maple syrup." },
+    { n:"Torre de Nutella", p:36, d:"3 panquecas americanas fofinhas, montadas em torre, com Nutella, morango fresco e calda de frutas vermelhas.", t:["★ Queridinho"] },
+    { n:"Panqueca Americana com Calda", p:26, d:"3 panquecas americanas fofinhas, com calda à escolha:", o:["Doce de leite","Brigadeiro","Frutas vermelhas","Nutella","Maple syrup"] },
+    { n:"Croissant na Chapa", p:14 },
+    { n:"Croissant na Chapa com Frutas Vermelhas", p:17, d:"Com calda de frutas vermelhas." },
+    { n:"Croissant com Nutella", p:19 },
+    { n:"Panelinha de Ovos com Ciabatta na Chapa", p:22 },
+    { n:"Panelinha de Ovos com Pão de Fermentação Natural", p:18, d:"Na chapa." },
+    { n:"Pão na Chapa", p:9 },
+    { n:"Pão de Queijo Frito", p:24, d:"Com recheio supercremoso de requeijão." },
+  ]},
+  { id:"sanduiches", nome:"Os Sanduíches", icon:"🥪", itens:[
+    { n:"Tostado de Miga", p:29, d:"Lanche típico argentino de pão miga, leve e fininho, com recheio de presunto e queijo." },
+    { n:"Croque Monsieur", p:32, d:"Pão de miga com presunto e queijo, molho bechamel e queijo gratinado." },
+    { n:"Burger da Condi", p:44, d:"2 smash burgers de 60 g, cebola dourada, muito queijo e molho especial no pão brioche. ♥ Acompanha batata frita." },
+  ]},
+  { id:"doces", nome:"Doces Condimento", icon:"🍰", obs:"Confeitaria americana feita na casa", itens:[
+    { n:"Red Velvet", p:24, d:"Bolo americano com textura de veludo, cor vermelha e cobertura à base de cream cheese.", t:["★ Clássico da casa"] },
+    { n:"Banoffee", p:22, d:"Torta com base de bolacha, recheio de doce de leite cozido, banana e chantilly, polvilhada com cacau." },
+    { n:"NY Style Cheesecake", p:29, d:"Escolha sua calda:", o:["Frutas vermelhas","Doce de leite","Goiabada","Brigadeiro"] },
+    { n:"Fudge Brownie", p:28, d:"Brownie cremoso de chocolate belga com sorvete de creme (o sorvete não acompanha no delivery). Escolha sua calda:", o:["Frutas vermelhas","Doce de leite","Brigadeiro","Nutella"] },
+    { n:"Bolinho de Cenoura", p:22, d:"Com calda de brigadeiro." },
+    { n:"Bolo de Coco Gelado", p:22, d:"Com doce de leite." },
+    { n:"Crème Brûlée de Doce de Leite", p:24, d:"Que delícia que é!! Parece um pudim mais cremoso: um creme denso e delicado ao mesmo tempo, de doce de leite, com casquinha de açúcar caramelizado." },
+    { n:"Devil's Cake", p:24, d:"Nosso queridão bolo chocolatudo, servido com calda de chocolate quente." },
+  ]},
+  { id:"drinks", nome:"Drinks", icon:"🍹", itens:[
+    { n:"Pink Drink", p:28, d:"Nossa Pink Lemonade com um toque de vodka ♥" },
+    { n:"Clericot Rosé", p:29, d:"Vinho frisante rosé com mix de frutas da época, marinadas em licor de laranja e infusão de hibisco." },
+    { n:"Jardim Rosa", p:36, d:"Gin Tanqueray e água tônica. Acompanha frutas, especiarias e ervas para você fazer seu mix e criar um drink do \"seu jeitinho\"." },
+    { n:"Beijo Rosa", p:35, d:"Vodka Absolut, suco de limão, xarope artesanal de camomila e espuma de gengibre com hibisco, servido em caneca de jardim." },
+    { n:"Caipirinha de Limão-Siciliano", p:32 },
+    { n:"Rose Dream", p:21, d:"Xarope de capim-santo, suco de limão, água com gás e algodão-doce cor-de-rosa.", t:["Sem álcool"] },
+    { n:"Pink Lemonade", p:18, d:"Nossa limonada rosa, feita na casa!", t:["Sem álcool"] },
+  ]},
+  { id:"cafes", nome:"Cafés & Chocolate", icon:"☕", itens:[
+    { n:"Dalgona Coffee \"café fofinho\"", p:16, d:"O famoso café do TikTok: creme de café, leite gelado, gelo e calda de chocolate." },
+    { n:"Espresso", p:7 },
+    { n:"Espresso Duplo", p:11 },
+    { n:"Espresso com Leite", p:null, v:[["P",9],["M",13]] },
+    { n:"Mocaccino (M)", p:15 },
+    { n:"Cappuccino de Nutella", p:17 },
+    { n:"Chocolate Quente Belga", p:17 },
+    { n:"Chocolate Gelado Alpino", p:15 },
+  ]},
+  { id:"chas", nome:"Carta de Chás", icon:"🫖", obs:"Chás Tal Chá · R$ 16 cada", itens:[
+    { n:"Chá Verde Touareg", p:16, t:["Chá verde"] },
+    { n:"Chá Verde Cherry Rose", p:16, t:["Chá verde"] },
+    { n:"Chá do Amor", p:16, t:["Chá preto"] },
+    { n:"Rooibos Limone", p:16, t:["Rooibos"] },
+    { n:"Vermelho Intenso", p:16, t:["Infusão"] },
+    { n:"Doce Amêndoa", p:16, t:["Infusão"] },
+  ]},
+  { id:"bebidas", nome:"Bebidas", icon:"🥤", itens:[
+    { n:"Água Mineral", p:7, t:["300 ml"] },
+    { n:"Suco de Laranja Natural", p:16 },
+    { n:"Suco Integral", p:16, o:["Frutas vermelhas","Uva","Manga"] },
+    { n:"Refrigerante", p:9, d:"Lata 350 ml.", o:["Coca-Cola","Coca-Cola Zero","Guaraná Antarctica","Guaraná Antarctica Zero"] },
+    { n:"H2OH!", p:10, t:["500 ml"] },
+    { n:"Stella Artois", p:14, t:["Long neck"] },
+  ]},
+];
+
+const slug = s => s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const fold = s => s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+const esc = s => s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const brl = v => "R$ " + v;
+
+function hl(text, q){
+  const safe = esc(text);
+  if(!q) return safe;
+  const f = fold(text); const i = f.indexOf(q);
+  if(i < 0) return safe;
+  return esc(text.slice(0,i)) + "<mark>" + esc(text.slice(i,i+q.length)) + "</mark>" + esc(text.slice(i+q.length));
+}
+
+const menuEl = document.getElementById("menu");
+const chipsEl = document.getElementById("chips");
+const seen = new Set();
+
+function render(q=""){
+  q = fold(q.trim());
+  let html = "", total = 0;
+  for(const c of MENU){
+    const itens = c.itens.filter(it => !q || fold([it.n,it.d||"",(it.o||[]).join(" "),(it.t||[]).join(" "),c.nome].join(" ")).includes(q));
+    if(!itens.length) continue;
+    total += itens.length;
+    html += `<section class="cat" id="${c.id}"><div class="cat-head"><h2>${esc(c.nome)}</h2>${c.obs?`<p>${esc(c.obs)}</p>`:""}</div><div class="card">`;
+    for(const it of itens){
+      let id = slug(it.n); if(seen.has(id) && !q) id += "-" + c.id; seen.add(id);
+      const price = it.v ? `<div class="price">${it.v.map(([k,v])=>`<small>${esc(k)}</small>${brl(v)}`).join("")}</div>`
+                         : `<div class="price">${brl(it.p)}</div>`;
+      html += `<article class="item" id="${id}">
+        <h3>${hl(it.n,q)}</h3>${price}
+        ${it.d?`<p class="desc">${hl(it.d,q)}</p>`:""}
+        ${it.o?`<div class="opts">${it.o.map(o=>`<span class="opt">${hl(o,q)}</span>`).join("")}</div>`:""}
+        ${it.t?`<div class="tags">${it.t.map(t=>`<span class="tag${t.startsWith("★")?" star":""}">${esc(t)}</span>`).join("")}</div>`:""}
+      </article>`;
+    }
+    html += `</div></section>`;
+  }
+  seen.clear();
+  menuEl.innerHTML = html;
+  document.getElementById("empty").style.display = total ? "none" : "block";
+  document.getElementById("favs").style.display = q ? "none" : "";
+  observe();
+}
+
+chipsEl.innerHTML = MENU.map(c=>`<a class="chip" href="#${c.id}" data-id="${c.id}">${c.icon} ${esc(c.nome.replace(/^(Os|As|O) /,""))}</a>`).join("");
+
+let io;
+function setActive(id){
+  chipsEl.querySelectorAll(".chip").forEach(ch=>{
+    const on = ch.dataset.id === id;
+    ch.setAttribute("aria-current", on ? "true" : "false");
+    if(on) chipsEl.scrollTo({left: ch.offsetLeft - (chipsEl.clientWidth - ch.offsetWidth)/2, behavior:"smooth"});
+  });
+}
+function observe(){
+  if(io) io.disconnect();
+  io = new IntersectionObserver(es=>{
+    const vis = es.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);
+    if(vis[0]) setActive(vis[0].target.id);
+  },{rootMargin:"-130px 0px -60% 0px"});
+  menuEl.querySelectorAll("section.cat").forEach(s=>io.observe(s));
+}
+
+document.getElementById("q").addEventListener("input", e=>{
+  render(e.target.value);
+  const top = menuEl.parentElement.getBoundingClientRect().top + scrollY - document.querySelector(".bar").offsetHeight;
+  if(scrollY > top) scrollTo({top, behavior:"auto"});
+});
+document.querySelectorAll(".fav").forEach(b=>b.addEventListener("click",()=>{
+  const el = document.getElementById(b.dataset.go);
+  if(el){ el.scrollIntoView({behavior:"smooth",block:"center"}); el.animate([{background:"var(--surface-2)"},{background:"transparent"}],{duration:1400}); }
+}));
+
+// Tema claro/escuro (lembrado por aparelho)
+const root = document.documentElement;
+try{ const t = localStorage.getItem("condi-theme"); if(t) root.dataset.theme = t; }catch(e){}
+document.getElementById("theme").addEventListener("click",()=>{
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+  try{ localStorage.setItem("condi-theme", root.dataset.theme); }catch(e){}
+});
+
+render();
+</script>
+</body>
+</html>
