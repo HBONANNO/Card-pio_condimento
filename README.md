@@ -1,9 +1,9 @@
 # Cardápio digital · Condimento Café & Bistrô
 
-- **Cardápio (consulta):** `https://hbonanno.github.io/Card-pio_condimento/`
-- **Cardápio com pedido pela mesa:** `https://hbonanno.github.io/Card-pio_condimento/?mesa=NÚMERO`
+- **Cardápio (consulta):** `https://cardapio-condimento.vercel.app/`
+- **Cardápio com pedido pela mesa:** `https://cardapio-condimento.vercel.app/?mesa=NÚMERO`
   (ex.: mesa 5 → `...?mesa=5`). Grave um link diferente em cada plaquinha NFC / QR code.
-- **Painel da cozinha:** `https://hbonanno.github.io/Card-pio_condimento/cozinha.html`
+- **Painel da cozinha:** `https://cardapio-condimento.vercel.app/cozinha.html`
 
 ## Arquivos
 | Arquivo | O que é |
