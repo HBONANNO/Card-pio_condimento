@@ -241,6 +241,15 @@
   .done .big{font-family:"Bodoni Moda",Georgia,serif;font-style:italic;font-size:32px;color:var(--accent);margin:4px 0 8px}
   .done p{color:var(--ink-soft);margin:0 0 10px}
   .mesa-tag{display:inline-block;margin-top:14px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--price)}
+  body.ordering .item{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
+  body.ordering .item:active{background:var(--surface-2)}
+  .sheet .mesa-in{
+    width:100%;height:48px;border:1px solid var(--line);border-radius:14px;padding:0 14px;font:inherit;font-size:18px;font-weight:700;
+    background:var(--bg);color:var(--ink);margin:6px 0 12px;
+  }
+  .resumo{border:1px dashed var(--line);border-radius:16px;padding:4px 14px;margin:6px 0 10px}
+  .resumo .line:last-of-type{border-bottom:0}
+  .obs-r{font-size:14px;margin:10px 0 0}
 </style>
 </head>
 <body>
@@ -305,7 +314,7 @@
 </footer>
 
 <div class="dock" id="dock"><div class="dock-inner">
-  <button class="btn" id="mesaBtn" type="button">Mesa <span id="mesaN"></span></button>
+  <button class="btn" id="mesaBtn" type="button"><span id="mesaN">Qual mesa?</span></button>
   <button class="btn primary" id="cartBtn" type="button" disabled>
     <span><span class="count" id="cartCount">0</span>Ver pedido</span><span id="cartTotal">R$ 0</span>
   </button>
@@ -492,24 +501,33 @@ document.querySelectorAll(".fav").forEach(b=>b.addEventListener("click",()=>{
 
 /* =====================================================================
    PEDIDO PELA MESA
-   O link de cada mesa termina com ?mesa=NÚMERO (ex.: ...?mesa=5).
-   Sem esse número o cardápio funciona só para consulta.
+   - Qualquer prato pode ser tocado e adicionado ao pedido.
+   - O link de cada mesa pode terminar com ?mesa=NÚMERO (ex.: ...?mesa=5);
+     sem ele, o cliente informa a mesa ao enviar.
+   - Enquanto o sistema da cozinha (config.js) não estiver ativado, o pedido
+     vira um resumo para o cliente mostrar ao garçom.
    ===================================================================== */
 const CFG = window.CONDI_CONFIG || {};
-const MESA = (new URLSearchParams(location.search).get("mesa") || "").replace(/\D/g,"").slice(0,3);
-const PEDIDOS = !!MESA && +MESA > 0;
+const ONLINE = !!(CFG.url && CFG.key);
+const PEDIDOS = true;
+const cleanMesa = v => String(v || "").replace(/\D/g,"").replace(/^0+/,"").slice(0,3);
+let MESA = cleanMesa(new URLSearchParams(location.search).get("mesa"));
+try{ if(MESA) sessionStorage.setItem("condi-mesa", MESA); else MESA = cleanMesa(sessionStorage.getItem("condi-mesa")); }catch(e){}
 const sheet = document.getElementById("sheet"), scrim = document.getElementById("scrim");
 const money = v => "R$ " + (Number.isInteger(v) ? v : v.toFixed(2).replace(".",","));
-const CART_KEY = "condi-pedido-mesa-" + MESA;
+const CART_KEY = "condi-pedido";
+const ssGet = k => { try{ return sessionStorage.getItem(k); }catch(e){ return null; } };
 let cart = [];
+try{ cart = JSON.parse(sessionStorage.getItem(CART_KEY) || "[]"); }catch(e){ cart = []; }
 
-if(PEDIDOS){
-  document.body.classList.add("ordering");
-  document.getElementById("mesaN").textContent = MESA;
-  document.getElementById("mesaTag").textContent = "Você está na mesa " + MESA;
-  try{ cart = JSON.parse(sessionStorage.getItem(CART_KEY) || "[]"); }catch(e){ cart = []; }
-  updateDock();
+document.body.classList.add("ordering");
+function setMesa(m){
+  MESA = cleanMesa(m);
+  try{ sessionStorage.setItem("condi-mesa", MESA); }catch(e){}
+  document.getElementById("mesaN").textContent = MESA ? "Mesa " + MESA : "Qual mesa?";
+  document.getElementById("mesaTag").textContent = MESA ? "Você está na mesa " + MESA : "";
 }
+setMesa(MESA);
 
 function saveCart(){ try{ sessionStorage.setItem(CART_KEY, JSON.stringify(cart)); }catch(e){} }
 function cartCount(){ return cart.reduce((s,l)=>s+l.qtd,0); }
@@ -520,6 +538,7 @@ function updateDock(){
   document.getElementById("cartTotal").textContent = money(cartTotal());
   document.getElementById("cartBtn").disabled = !n;
 }
+updateDock();
 let toastT;
 function toast(msg){
   const t = document.getElementById("toast"); t.textContent = msg; t.classList.add("show");
@@ -538,9 +557,11 @@ function addToCart(nome, escolha, preco, qtd){
   toast(`${qtd}× ${nome} no pedido`);
 }
 
-// Toque no "+": item simples entra direto; item com opções abre a escolha
+// Tocar no prato (ou no "+"): item simples entra direto; item com opções abre a escolha
 menuEl.addEventListener("click", e=>{
-  const b = e.target.closest(".add"); if(!b) return;
+  if(e.target.closest("a")) return;
+  const art = e.target.closest(".item"); if(!art) return;
+  const b = art.querySelector(".add"); if(!b) return;
   const [cid, i] = b.dataset.k.split("|");
   const it = MENU.find(c=>c.id===cid).itens[+i];
   if(it.v || it.o) openPicker(it); else addToCart(it.n, "", it.p, 1);
@@ -548,7 +569,7 @@ menuEl.addEventListener("click", e=>{
 
 function openPicker(it){
   const choices = it.v ? it.v.map(([k,v])=>({label:k, preco:v})) : it.o.map(o=>({label:o, preco:it.p}));
-  openSheet(`<h3>${esc(it.n)}</h3><p class="muted">Escolha uma opção</p>
+  openSheet(`<h3>${esc(it.n)}</h3><p class="muted">${it.d ? esc(it.d) : "Escolha uma opção"}</p>
     <form id="pick">
       ${choices.map((c,i)=>`<label class="choice"><span>${esc(c.label)}</span>
         <span style="display:flex;align-items:center;gap:12px"><span class="lp">${money(c.preco)}</span>
@@ -568,51 +589,90 @@ function openPicker(it){
   });
 }
 
+const mesaField = (id) => `<label class="lbl" for="${id}">Número da sua mesa</label>
+  <input class="mesa-in" id="${id}" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" placeholder="Ex.: 12" value="${esc(MESA)}" autocomplete="off">`;
+
 function openCart(){
   if(!cart.length){ closeSheet(); return; }
-  openSheet(`<h3>Seu pedido</h3><p class="muted">Mesa ${MESA} · o pagamento é feito no final, com o garçom</p>
+  const obsVal = (document.getElementById("obs") || {}).value || ssGet("condi-obs") || "";
+  openSheet(`<h3>Seu pedido</h3><p class="muted">${MESA ? "Mesa " + esc(MESA) + " · o pagamento" : "O pagamento"} é feito no final, com o garçom</p>
     <div id="lines">${cart.map((l,i)=>`<div class="line">
       <div><div class="ln">${esc(l.nome)}</div>${l.escolha?`<div class="lc">${esc(l.escolha)}</div>`:""}</div>
       <div class="lr"><span class="stepper"><button type="button" data-i="${i}" data-d="-1" aria-label="Menos">−</button><span>${l.qtd}</span><button type="button" data-i="${i}" data-d="1" aria-label="Mais">+</button></span>
       <span class="lp">${money(l.preco*l.qtd)}</span></div></div>`).join("")}</div>
     <div class="sum"><span>Total</span><b>${money(cartTotal())}</b></div>
+    ${MESA ? "" : mesaField("mesaIn")}
     <label class="lbl" for="obs">Alguma observação?</label>
-    <textarea id="obs" maxlength="300" placeholder="Ex.: sem cebola, carne ao ponto, trazer junto com as bebidas…"></textarea>
-    <button class="btn primary block" id="send" type="button">Enviar pedido para a cozinha</button>
+    <textarea id="obs" maxlength="300" placeholder="Ex.: sem cebola, carne ao ponto, trazer junto com as bebidas…">${esc(obsVal)}</textarea>
+    <button class="btn primary block" id="send" type="button">${ONLINE ? "Enviar pedido para a cozinha" : "Finalizar pedido"}</button>
     <button class="btn ghost block" type="button" id="more">Continuar escolhendo</button>
     <p class="err" id="err" hidden></p>`);
+  const obs = document.getElementById("obs");
+  obs.addEventListener("input", ()=>{ try{ sessionStorage.setItem("condi-obs", obs.value); }catch(e){} });
   sheet.querySelectorAll("[data-i]").forEach(b=>b.addEventListener("click",()=>{
     const l = cart[+b.dataset.i]; l.qtd += +b.dataset.d;
     if(l.qtd <= 0) cart.splice(+b.dataset.i, 1);
+    const mi = document.getElementById("mesaIn"); if(mi && cleanMesa(mi.value)) setMesa(mi.value);
     saveCart(); updateDock(); openCart();
   }));
   document.getElementById("more").addEventListener("click", closeSheet);
   document.getElementById("send").addEventListener("click", async ev=>{
     const btn = ev.currentTarget, err = document.getElementById("err");
+    const mi = document.getElementById("mesaIn");
+    if(mi){
+      if(!cleanMesa(mi.value)){ err.textContent = "Informe o número da sua mesa."; err.hidden = false; mi.focus(); return; }
+      setMesa(mi.value);
+    }
+    const pedido = {
+      itens: cart.map(l=>({nome:l.nome, escolha:l.escolha, qtd:l.qtd, preco:l.preco})),
+      observacao: obs.value.trim() || null,
+      total: cartTotal()
+    };
+    if(!ONLINE){ showResumo(pedido); return; }
     btn.disabled = true; btn.textContent = "Enviando…"; err.hidden = true;
     try{
-      await enviar("pedido", {
-        itens: cart.map(l=>({nome:l.nome, escolha:l.escolha, qtd:l.qtd, preco:l.preco})),
-        observacao: document.getElementById("obs").value.trim() || null,
-        total: cartTotal()
-      });
-      cart = []; saveCart(); updateDock();
+      await enviar("pedido", pedido);
+      clearOrder();
       showDone("Pedido enviado!", "A cozinha já recebeu o seu pedido. Daqui a pouquinho ele chega na sua mesa ♥");
     }catch(e){
       btn.disabled = false; btn.textContent = "Tentar enviar de novo";
-      err.textContent = e.message === "config" ? "O sistema de pedidos ainda não foi ativado. Por favor, chame o garçom." : "Não conseguimos enviar agora. Verifique a internet e tente de novo, ou chame o garçom.";
+      err.textContent = "Não conseguimos enviar agora. Verifique a internet e tente de novo, ou chame o garçom.";
       err.hidden = false;
     }
   });
 }
 
+function clearOrder(){ cart = []; saveCart(); updateDock(); try{ sessionStorage.removeItem("condi-obs"); }catch(e){} }
+
+// Sem sistema de cozinha ativo: resumo para mostrar ao garçom
+function showResumo(p){
+  openSheet(`<div class="done"><div class="mesa-tag">Mesa ${esc(MESA)}</div><div class="big">Pedido pronto!</div>
+      <p>Mostre esta tela ao garçom para confirmar o seu pedido.</p></div>
+    <div class="resumo">${p.itens.map(i=>`<div class="line"><div><div class="ln">${i.qtd}× ${esc(i.nome)}</div>${i.escolha?`<div class="lc">${esc(i.escolha)}</div>`:""}</div><span class="lp">${money(i.preco*i.qtd)}</span></div>`).join("")}
+      ${p.observacao ? `<p class="obs-r"><b>Obs.:</b> ${esc(p.observacao)}</p>` : ""}
+      <div class="sum"><span>Total</span><b>${money(p.total)}</b></div></div>
+    <button class="btn primary block" type="button" id="novo">Garçom anotou · fazer novo pedido</button>
+    <button class="btn ghost block" type="button" id="edit">Voltar e alterar</button>`);
+  document.getElementById("novo").addEventListener("click", ()=>{ clearOrder(); closeSheet(); toast("Bom apetite! ♥"); });
+  document.getElementById("edit").addEventListener("click", openCart);
+}
+
 function openMesa(){
-  openSheet(`<h3>Mesa ${MESA}</h3><p class="muted">Precisa de alguma coisa? A equipe é avisada na hora.</p>
-    <button class="btn primary block" type="button" data-call="garcom">Chamar o garçom</button>
-    <button class="btn primary block" type="button" data-call="conta">Pedir a conta</button>
+  const calls = ONLINE ? `<button class="btn primary block" type="button" data-call="garcom">Chamar o garçom</button>
+    <button class="btn primary block" type="button" data-call="conta">Pedir a conta</button>` : "";
+  openSheet(`<h3>${MESA ? "Mesa " + esc(MESA) : "Qual é a sua mesa?"}</h3>
+    <p class="muted">${ONLINE ? "Precisa de alguma coisa? A equipe é avisada na hora." : "O número costuma estar na plaquinha da mesa."}</p>
+    ${ONLINE && MESA ? "" : `${mesaField("mesaSet")}<button class="btn primary block" type="button" id="saveMesa">Confirmar mesa</button>`}
+    ${MESA ? calls : ""}
     <button class="btn ghost block" type="button" id="back">Voltar</button>
     <p class="err" id="err" hidden></p>`);
   document.getElementById("back").addEventListener("click", closeSheet);
+  const sm = document.getElementById("saveMesa");
+  if(sm) sm.addEventListener("click", ()=>{
+    const v = cleanMesa(document.getElementById("mesaSet").value), err = document.getElementById("err");
+    if(!v){ err.textContent = "Informe o número da mesa."; err.hidden = false; return; }
+    setMesa(v); closeSheet(); toast("Mesa " + v + " confirmada");
+  });
   sheet.querySelectorAll("[data-call]").forEach(b=>b.addEventListener("click", async ()=>{
     const tipo = b.dataset.call;
     sheet.querySelectorAll("[data-call]").forEach(x=>x.disabled = true);
@@ -623,20 +683,20 @@ function openMesa(){
     }catch(e){
       sheet.querySelectorAll("[data-call]").forEach(x=>x.disabled = false);
       const err = document.getElementById("err");
-      err.textContent = e.message === "config" ? "O sistema ainda não foi ativado. Por favor, acene para a equipe." : "Não conseguimos avisar agora. Verifique a internet e tente de novo.";
+      err.textContent = "Não conseguimos avisar agora. Verifique a internet e tente de novo.";
       err.hidden = false;
     }
   }));
 }
 
 function showDone(title, text){
-  openSheet(`<div class="done"><div class="mesa-tag">Mesa ${MESA}</div><div class="big">${esc(title)}</div>
+  openSheet(`<div class="done"><div class="mesa-tag">Mesa ${esc(MESA)}</div><div class="big">${esc(title)}</div>
     <p>${esc(text)}</p><button class="btn primary block" type="button" id="ok">Voltar ao cardápio</button></div>`);
   document.getElementById("ok").addEventListener("click", closeSheet);
 }
 
 async function enviar(tipo, dados){
-  if(!CFG.url || !CFG.key) throw new Error("config");
+  if(!ONLINE) throw new Error("config");
   const headers = {"apikey": CFG.key, "Content-Type": "application/json", "Prefer": "return=minimal"};
   if(!CFG.key.startsWith("sb_")) headers["Authorization"] = "Bearer " + CFG.key;
   const r = await fetch(CFG.url.replace(/\/$/,"") + "/rest/v1/pedidos", {
