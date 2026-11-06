@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex">
 <title>Painel da Cozinha · Condimento</title>
 <meta name="theme-color" content="#f3d9d6">
+<meta name="color-scheme" content="light only">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -15,20 +16,6 @@
     --accent:#4d5977; --price:#927a5d; --line:#ecd9d5; --rose:#ebc6c1;
     --new:#e0708a; --new-bg:#fdecef; --prep:#c98a2b; --prep-bg:#fbf1e1; --ok:#4f8a6b; --ok-bg:#e9f3ed;
     --on-accent:#ffffff; --shadow:0 1px 2px rgba(77,89,119,.06),0 8px 24px -12px rgba(77,89,119,.2);
-  }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#1f1b1f; --surface:#2a2429; --surface-2:#342b31; --ink:#f4e9e7; --ink-soft:#c3b3b5;
-      --accent:#f0c2c5; --price:#d9c2a0; --line:#43363d; --rose:#6b4650;
-      --new:#f08aa1; --new-bg:#4a2a33; --prep:#e3b062; --prep-bg:#45381f; --ok:#86c3a2; --ok-bg:#22382d;
-      --on-accent:#2a2429; --shadow:0 8px 24px -12px rgba(0,0,0,.6);
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:#1f1b1f; --surface:#2a2429; --surface-2:#342b31; --ink:#f4e9e7; --ink-soft:#c3b3b5;
-    --accent:#f0c2c5; --price:#d9c2a0; --line:#43363d; --rose:#6b4650;
-    --new:#f08aa1; --new-bg:#4a2a33; --prep:#e3b062; --prep-bg:#45381f; --ok:#86c3a2; --ok-bg:#22382d;
-    --on-accent:#2a2429; --shadow:0 8px 24px -12px rgba(0,0,0,.6);
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:"Mulish","Avenir Next",system-ui,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased}
@@ -285,9 +272,6 @@ function flashTitle(n){
   clearInterval(titleT); let on = false, k = 0;
   titleT = setInterval(()=>{ document.title = (on = !on) ? `(${n}) Pedido novo!` : "Painel da Cozinha · Condimento"; if(++k > 12){ clearInterval(titleT); document.title = "Painel da Cozinha · Condimento"; } }, 700);
 }
-
-// Tema (segue o aparelho; ?tema=escuro força o escuro)
-if(/tema=escuro/.test(location.search)) document.documentElement.dataset.theme = "dark";
 
 if(session && BASE && CFG.key) showBoard(); else showLogin();
 </script>
